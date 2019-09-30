@@ -28,10 +28,26 @@ var Todo = React.createClass({
   });
   
   var TodoForm = React.createClass({
+    onDescriptionChange: function(event){
+        this.setState({description: event.target.value})
+    },
+
+    onSubmit:function(event) {
+        event.preventDefault();
+        var description = this.state.description.trim();
+        if (!description) return;
+        this.props.CreateTodo({description:description});
+        this.setState({description: ''});
+    },
+
+    getInitialState: function() {
+        return {description: ''};
+    },
+
     render: function() {
       return (
-        <form className="todo-form">
-          <input type="text" />
+        <form className="todo-form" onSubmit={this.onSubmit}>
+          <input type="text" value={this.state.description} onChange={this.onDescriptionChange} />
           <input type="submit" value="Add todo" />
         </form>
       );

@@ -42,11 +42,27 @@ var TodoList = React.createClass({
 var TodoForm = React.createClass({
   displayName: "TodoForm",
 
+  onDescriptionChange: function (event) {
+    this.setState({ description: event.target.value });
+  },
+
+  onSubmit: function (event) {
+    event.preventDefault();
+    var description = this.state.description.trim();
+    if (!description) return;
+    this.props.CreateTodo({ description: description });
+    this.setState({ description: '' });
+  },
+
+  getInitialState: function () {
+    return { description: '' };
+  },
+
   render: function () {
     return React.createElement(
       "form",
-      { className: "todo-form" },
-      React.createElement("input", { type: "text" }),
+      { className: "todo-form", onSubmit: this.onSubmit },
+      React.createElement("input", { type: "text", value: this.state.description, onChange: this.onDescriptionChange }),
       React.createElement("input", { type: "submit", value: "Add todo" })
     );
   }
