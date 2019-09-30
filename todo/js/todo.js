@@ -1,6 +1,11 @@
 var Todo = React.createClass({
   displayName: "Todo",
 
+  onTodoClick: function (event) {
+    event.preventDefault();
+    this.props.completeTodo({ todoId: this.props.id });
+  },
+
   render: function () {
     return React.createElement(
       "li",
@@ -13,7 +18,7 @@ var Todo = React.createClass({
         "Done!"
       ) : React.createElement(
         "a",
-        { href: "#" },
+        { href: "#", onClick: this.onTodoClick },
         "Mark as done"
       )
     );
@@ -27,7 +32,10 @@ var TodoList = React.createClass({
     var todoNodes = this.props.data.map(function (todo) {
       return React.createElement(
         Todo,
-        { id: todo.id, done: todo.done ? true : false, completeTodo: this.props.completeTodo },
+        {
+          id: todo.id,
+          done: todo.done ? true : false,
+          completeTodo: this.props.completeTodo },
         todo.description
       );
     }.bind(this));
@@ -63,7 +71,11 @@ var TodoForm = React.createClass({
     return React.createElement(
       "form",
       { className: "todo-form", onSubmit: this.onSubmit },
-      React.createElement("input", { type: "text", value: this.state.description, onChange: this.onDescriptionChange }),
+      React.createElement("input", {
+        type: "text",
+        value: this.state.description,
+        onChange: this.onDescriptionChange
+      }),
       React.createElement("input", { type: "submit", value: "Add todo" })
     );
   }

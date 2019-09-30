@@ -1,20 +1,30 @@
 var Todo = React.createClass({
+    onTodoClick: function(event) {
+        event.preventDefault();
+        this.props.completeTodo({todoId: this.props.id});
+      },
+
     render: function() {
-      return (
-        <li className="todo" id="{this.props.id}">
-          {this.props.children}
-          &nbsp; - &nbsp;
-          {this.props.done ? <span>Done!</span> : <a href="#">Mark as done</a>}
-        </li>
-      );
-    }
-  });
+    return (
+      <li className="todo" id="{this.props.id}">
+        {this.props.children}
+        &nbsp; - &nbsp;
+        {this.props.done ? <span>Done!</span> : <a href="#" onClick={this.onTodoClick}>Mark as done</a>}
+      </li>
+    );
+  }
+});
   
   var TodoList = React.createClass({
     render: function() {
         var todoNodes = this.props.data.map(function(todo) {
           return (
-            <Todo id={todo.id} done={todo.done ? true : false} completeTodo={this.props.completeTodo}>{todo.description}</Todo>
+            <Todo
+              id={todo.id}
+              done={todo.done ? true : false}
+              completeTodo={this.props.completeTodo}>
+              {todo.description}
+            </Todo>
           );
         }.bind(this));
     
@@ -44,14 +54,18 @@ var Todo = React.createClass({
     },
 
     render: function() {
-      return (
-        <form className="todo-form" onSubmit={this.onSubmit}>
-          <input type="text" value={this.state.description} onChange={this.onDescriptionChange} />
-          <input type="submit" value="Add todo" />
-        </form>
-      );
-    }
-  });
+        return (
+          <form className="todo-form" onSubmit={this.onSubmit}>
+            <input
+              type="text"
+              value={this.state.description}
+              onChange={this.onDescriptionChange}
+            />
+            <input type="submit" value="Add todo" />
+          </form>
+        );
+      }
+    });
 
   var TodoBox = React.createClass({
     loadTodoList: function() {
