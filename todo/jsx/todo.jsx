@@ -12,20 +12,19 @@ var Todo = React.createClass({
   
   var TodoList = React.createClass({
     render: function() {
-      var todoNodes = this.props.data.map(function(todo) {
+        var todoNodes = this.props.data.map(function(todo) {
+          return (
+            <Todo id={todo.id} done={todo.done ? true : false} completeTodo={this.props.completeTodo}>{todo.description}</Todo>
+          );
+        }.bind(this));
+    
         return (
-          <Todo id={todo.id} done={todo.done ? true : false}>
-            {todo.description}
-          </Todo>
+          <ul className="todo-list">
+            {todoNodes}
+          </ul>
         );
-      });
-      return (
-        <ul className="todo-list">
-          {todoNodes}
-        </ul>
-      );
-    }
-  });
+      }
+    });
   
   var TodoForm = React.createClass({
     onDescriptionChange: function(event){

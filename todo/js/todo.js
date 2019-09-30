@@ -27,10 +27,11 @@ var TodoList = React.createClass({
     var todoNodes = this.props.data.map(function (todo) {
       return React.createElement(
         Todo,
-        { id: todo.id, done: todo.done ? true : false },
+        { id: todo.id, done: todo.done ? true : false, completeTodo: this.props.completeTodo },
         todo.description
       );
-    });
+    }.bind(this));
+
     return React.createElement(
       "ul",
       { className: "todo-list" },
