@@ -71,12 +71,41 @@ var TodoForm = React.createClass({
 var TodoBox = React.createClass({
   displayName: "TodoBox",
 
+  loadTodoList: function () {
+    $.ajax({
+      url: this.props.url,
+      dataType: 'json',
+      cache: false,
+      success: function (data) {
+        this.setState({ data: data });
+      }.bind(this),
+      error: function (xhr, status, err) {
+        console.error(this.props.url, status, err.toString());
+      }.bind(this)
+    });
+  },
+
   createTodo: function (description) {
     $.ajax({
       url: this.props.url,
       dataType: 'json',
       type: 'POST',
       data: description,
+      success: function (data) {
+        this.setState({ data: data });
+      }.bind(this),
+      error: function (xhr, status, err) {
+        console.error(this.props.url, status, err.toString());
+      }.bind(this)
+    });
+  },
+
+  completeTodo: function (todoId) {
+    $.ajax({
+      url: this.props.url + '/done',
+      dataType: 'json',
+      type: 'POST',
+      data: todoId,
       success: function (data) {
         this.setState({ data: data });
       }.bind(this),
