@@ -59,7 +59,7 @@ var TodoForm = React.createClass({
     event.preventDefault();
     var description = this.state.description.trim();
     if (!description) return;
-    this.props.CreateTodo({ description: description });
+    this.props.createTodo({ description: description });
     this.setState({ description: '' });
   },
 
@@ -146,7 +146,7 @@ var TodoBox = React.createClass({
         null,
         "Todo List"
       ),
-      React.createElement(TodoList, { data: this.state.data }),
+      React.createElement(TodoList, { data: this.state.data, completeTodo: this.completeTodo }),
       React.createElement(TodoForm, { createTodo: this.createTodo })
     );
   }

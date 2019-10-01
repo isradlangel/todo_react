@@ -1,4 +1,1 @@
-[
-    { "id": 1, "description": "Buy milk", "done": true },
-    { "id": 2, "description": "Do dishes", "done": false }
-]
+[{"id":1,"description":"Buy milk","done":true},{"id":2,"description":"Do dishes","done":true},{"id":3,"description":"Test todo","done":false}]
